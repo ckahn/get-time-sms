@@ -9,7 +9,7 @@ module TwilioHelper
     time_s = (Time.now.utc + offset).strftime("%l:%M%p").strip
     "The time is #{time_s} in #{city}, #{state}."
   end
-  
+ 
   def coordinates(city, state)
     city  = city.gsub(" ", "%20")
     state = state.gsub(" ", "%20")
