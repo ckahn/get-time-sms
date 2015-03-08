@@ -20,7 +20,7 @@ module TwilioHelper
       time_s = (Time.now.utc + offset).strftime("%l:%M%p").strip
       "The time is #{time_s} in #{city_data[:address]}."
     else
-      'Ask your question like this: "What time is it in Tucson, AZ?"'
+      'Ask your question like this: "What time is it in <City>, <State>?"'
     end
   end
   
