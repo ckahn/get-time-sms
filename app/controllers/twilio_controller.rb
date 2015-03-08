@@ -12,7 +12,7 @@ class TwilioController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       r.sms current_time("San Francisco", "CA"), 
             to: "+15204959480", 
-            from: "+19283251126"
+            from: "+19285506230"
     end
     
     render_twiml response
