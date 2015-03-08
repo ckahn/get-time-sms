@@ -8,7 +8,14 @@ module TwilioHelper
       city_state_s = sms_message.gsub(/(^what time is it in|[\s\W]*$)/i, "")
       city, state = city_state_s.split(",").map { |word| word.strip }
       
-      city_data = city_data(city, state)
+      city_data = {}
+      
+      if state 
+        city_data = city_data(city, state)
+      else
+        city_data = city_data(city)
+      end
+      
       offset = offset(city_data[:coordinates])
       time_s = (Time.now.utc + offset).strftime("%l:%M%p").strip
       "The time is #{time_s} in #{city_data[:address]}."
@@ -17,7 +24,7 @@ module TwilioHelper
     end
   end
   
-  def city_data(city, state)
+  def city_data(city, state = "")
     city_data = {}
   
     city  = city.gsub(" ", "%20")
