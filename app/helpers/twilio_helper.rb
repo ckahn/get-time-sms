@@ -26,14 +26,18 @@ module TwilioHelper
   
     uri   = URI.parse("http://maps.googleapis.com/maps/api/geocode/" + 
                       "json?address=#{location}&sensor=false")
-    data = JSON.parse(uri.read)
-  
-    city_data[:coordinates] = { 
-      lat: data["results"][0]["geometry"]["location"]["lat"],
-      lng: data["results"][0]["geometry"]["location"]["lng"] 
-    }
-    city_data[:address] = data["results"][0]["formatted_address"]
-    city_data[:status]  = data["status"]
+    geo_data = JSON.parse(uri.read)
+    
+    if geo_data["status"] == "OK"
+      city_data[:coordinates] = { 
+        lat: geo_data["results"][0]["geometry"]["location"]["lat"],
+        lng: geo_data["results"][0]["geometry"]["location"]["lng"] 
+      }
+      city_data[:address] = geo_data["results"][0]["formatted_address"]
+      city_data[:status]  = geo_data["status"]
+    else
+      city_data[:status] = geo_data["status"]
+    end
     city_data
   end
   

@@ -11,10 +11,6 @@ class TwilioController < ApplicationController
   def sms
     response = Twilio::TwiML::Response.new do |r|
       r.sms current_time(params["Body"])
-=begin
-,
-            to: params["From"], 
-=end            from: params["To"]
     end
     
     render_twiml response
