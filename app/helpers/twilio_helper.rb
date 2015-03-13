@@ -24,8 +24,8 @@ module TwilioHelper
     city_data = {}
     location.gsub!(" ", "%20")
   
-    uri   = URI.parse("http://maps.googleapis.com/maps/api/geocode/" + 
-                      "json?address=#{location}&sensor=false")
+    uri = URI.parse("http://maps.googleapis.com/maps/api/geocode/" + 
+                    "json?address=#{location}&sensor=false")
     geo_data = JSON.parse(uri.read)
     
     if geo_data["status"] == "OK"
@@ -34,10 +34,9 @@ module TwilioHelper
         lng: geo_data["results"][0]["geometry"]["location"]["lng"] 
       }
       city_data[:address] = geo_data["results"][0]["formatted_address"]
-      city_data[:status]  = geo_data["status"]
-    else
-      city_data[:status] = geo_data["status"]
     end
+    city_data[:status] = geo_data["status"]
+    
     city_data
   end
   
@@ -45,8 +44,8 @@ module TwilioHelper
     uri = URI.parse("https://maps.googleapis.com/maps/api/timezone/" + 
                     "json?location=#{coordinates[:lat]},#{coordinates[:lng]}" +
                     "&timestamp=#{Time.now.to_i}&sensor=false")
-    offset_h = JSON.parse(uri.read)
+    timezone_data = JSON.parse(uri.read)
   
-    offset_h["rawOffset"] + offset_h["dstOffset"]
+    timezone_data["rawOffset"] + timezone_data["dstOffset"]
   end
 end
